@@ -22,7 +22,7 @@ function onUrlChange() {
 
     (async () => {
         div_text = [...document.getElementsByTagName('div')];
-        setInverval(async function () {
+        setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
                     empty_objects.push(div.cloneNode(true));
@@ -46,9 +46,7 @@ function onUrlChange() {
             }
             data = await Promise.all(fetch_array);
             console.log(empty_objects);
-        }, 3000);
 
-        setInverval(function () {
             all_divs = document.getElementsByTagName('div');
             length = all_divs.length;
             let counter = 0;
@@ -74,7 +72,9 @@ function onUrlChange() {
                     }
                 }
             }
-        }, 5000);
+
+        }, 3000);
+
     })();
 }
 /*
