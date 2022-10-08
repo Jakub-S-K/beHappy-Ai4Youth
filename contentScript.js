@@ -12,6 +12,9 @@ new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
         lastUrl = url;
+        data = [];
+        empty_objects = [];
+        fetch_array = [];
         onUrlChange();
     }
 }).observe(document, { subtree: true, childList: true });
@@ -26,7 +29,7 @@ function onUrlChange() {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
                     empty_objects.push(div.cloneNode(true));
-                    //console.log(div.parentNode.parentNode);
+                    //console.log(div.innerText);
                     let text = div.innerText + "\n";
                     //console.log('node uri = ' + div.baseURI);
                     n = div.children;
@@ -45,7 +48,10 @@ function onUrlChange() {
                 }
             }
             data = await Promise.all(fetch_array);
-            console.log(empty_objects);
+            data.forEach(object => {
+                object['send'] = true;
+            })
+            console.log(fetch_array);
 
             all_divs = document.getElementsByTagName('div');
             length = all_divs.length;
@@ -62,7 +68,11 @@ function onUrlChange() {
                         } else {
                             var img_number = '0';
                         }
+                        if(div.lastChild.getAttribute('custom')) {
+                            console.log('jest juz'); //TODO: check if img exists 
+                        }
                         insert.src = chrome.runtime.getURL(`${img_prefix + img_number }`);
+                        insert['custom'] = 'ai4youth'
                         insert.height = 32;
                         insert.width = 32;
                         insert.style.position = 'absolute';
