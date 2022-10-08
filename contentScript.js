@@ -22,12 +22,14 @@ new MutationObserver(() => {
 function onUrlChange() {
     console.log('URL changed!', location.href);
 
-
     (async () => {
         div_text = [...document.getElementsByTagName('div')];
         setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
+                    if(div.hasProperty('send')) {
+                        continue;
+                    }
                     empty_objects.push(div.cloneNode(true));
                     //console.log(div.innerText);
                     let text = div.innerText + "\n";
@@ -48,9 +50,9 @@ function onUrlChange() {
                 }
             }
             data = await Promise.all(fetch_array);
-            data.forEach(object => {
+            for (obj of data) {
                 object['send'] = true;
-            })
+            };
             console.log(fetch_array);
 
             all_divs = document.getElementsByTagName('div');
