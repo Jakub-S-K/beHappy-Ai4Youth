@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "activeTab", "scripting", "tabs", "https://www.reddit.com/*"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "content_scripts": [
     {
       "matches": ["https://www.reddit.com/*"],
