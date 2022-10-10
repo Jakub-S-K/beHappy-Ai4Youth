@@ -1,16 +1,16 @@
 {
   "name": "Getting Started Example",
   "description": "Build an Extension!",
-  "version": "1.0",
+  "version": "0.4",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "https://www.reddit.com/*"],
   "content_scripts": [
     {
-      "matches": ["*"],
-      "js": ["contentScript.js"],
+      "matches": ["https://www.reddit.com/*"],
+      "js": ["contentScript.js", "jquery-3.6.1.min.js"],
       "run_at": "document_end"
     }
   ],
@@ -26,7 +26,7 @@
   "web_accessible_resources":[
     {
       "resources": [ "/content_img/0.png", "/content_img/1.png" ],
-      "matches": [ "*" ]
+      "matches": [ "https://www.reddit.com/*" ]
     }],
   "icons": {
     "16": "/images/get_started16.png",
@@ -34,5 +34,9 @@
     "48": "/images/get_started48.png",
     "128": "/images/get_started128.png"
   },
-  "options_page": "options.html"
+  "options_page": "options.html",
+
+  "externally_connectable": {
+    "matches": ["https://www.reddit.com/*"]
+}
 }

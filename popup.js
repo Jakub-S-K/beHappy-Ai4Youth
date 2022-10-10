@@ -1,4 +1,5 @@
 // Initialize butotn with users's prefered color
+/*
 let changeColor = document.getElementById("changeColor");
 
 chrome.storage.sync.get("color", ({ color }) => {
@@ -22,3 +23,29 @@ function setPageBackgroundColor() {
     document.body.style.backgroundColor = color;
   });
 }
+*/
+
+
+/*
+$(function() {
+  $('#btnChange').click(function() {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+      chrome.tabs.sendMessage(tabs[0].id, {todo: "log"});
+    });
+  });
+});
+*/
+
+
+
+//When button in popup is clicked, change AI type
+document.addEventListener('DOMContentLoaded', () => {
+  var aiTypeButton = document.getElementById('btnChange');
+  let currentAiFlag = 1;
+
+  aiTypeButton.addEventListener('click', () => {
+    chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
+      console.log('Current AI is: ' + currentAiFlag);
+    });
+  });
+});
