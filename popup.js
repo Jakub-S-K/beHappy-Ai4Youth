@@ -53,16 +53,15 @@ document.addEventListener('DOMContentLoaded', () => {
       chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
         console.log('Current AI is: ' + currentAiFlag);
       });
-
     }
-        //if sarcasmAI is selected, change to hateAI
+    
+    //if sarcasmAI is selected, change to hateAI
     if(currentAiFlag === 0){
       currentAiFlag = 1;
 
       chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
         console.log('Current AI is: ' + currentAIFlag);
       });
-      
     }
     
   });
