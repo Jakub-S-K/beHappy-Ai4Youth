@@ -1,4 +1,4 @@
-let color = '#3aa757';
+let color = '#3aa757'; //comment
 let dupa = {
   quote: "qwer1"
 };
