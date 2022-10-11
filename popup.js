@@ -43,9 +43,27 @@ document.addEventListener('DOMContentLoaded', () => {
   var aiTypeButton = document.getElementById('btnChange');
   let currentAiFlag = 1;
 
+  chrome.storage.sync.set({aiFlag: currentAiFlag});
+
   aiTypeButton.addEventListener('click', () => {
-    chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
-      console.log('Current AI is: ' + currentAiFlag);
-    });
+    //if hateAI is selected, change to sarcasmAI
+    if(currentAiFlag === 1){
+      currentAiFlag = 0;
+
+      chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
+        console.log('Current AI is: ' + currentAiFlag);
+      });
+
+    }
+        //if sarcasmAI is selected, change to hateAI
+    if(currentAiFlag === 0){
+      currentAiFlag = 1;
+
+      chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
+        console.log('Current AI is: ' + currentAIFlag);
+      });
+      
+    }
+    
   });
 });
