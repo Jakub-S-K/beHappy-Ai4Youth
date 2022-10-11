@@ -71,12 +71,13 @@ function onUrlChange() {
                             var img_number = '0.png';
                         }
                         //console.log(div.lastChild);
-                        if(div.lastChild.hasOwnProperty('ai-img-id')) {
+                        if(div.lastChild.getAttribute('ai-img-id')) {
                             console.log('jest juz'); //TODO: check if img exists 
                             continue;
                         }
                         insert.src = chrome.runtime.getURL(`${img_prefix + img_number }`);
-                        insert['ai-img-id'] = counter;
+                        insert.setAttribute('ai-img-id', counter);
+                        //insert['ai-img-id'] = counter;
                         insert.height = 32;
                         insert.width = 32;
                         insert.style.position = 'absolute';
