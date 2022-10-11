@@ -40,7 +40,7 @@ tokenizer = None
 with open("tokenizer_twitter_save.dat", "rb") as file:
     tokenizer = pickle.load(file)
 
-model = keras.models.load_model("ajajTwitter")
+model = keras.models.load_model("model.h5")
 
 #predict_sentiment("test 123")
 
