@@ -1,7 +1,7 @@
 {
   "name": "Getting Started Example",
   "description": "Build an Extension!",
-  "version": "0.4",
+  "version": "0.5",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.reddit.com/*"],
-      "js": ["contentScript.js", "jquery-3.6.1.min.js"],
+      "js": ["contentScript.js"],
       "run_at": "document_end"
     }
   ],
