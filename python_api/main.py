@@ -21,6 +21,7 @@ def predict_endpoint():
     response = {
         'is_negative': analysis_result
     }
+    print(analysis_result)
     return jsonify(response)
 
 
