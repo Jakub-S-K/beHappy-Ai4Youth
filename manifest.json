@@ -10,7 +10,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.reddit.com/*"],
-      "js": ["contentScript.js", "jquery-3.6.1.min.js"],
+      "js": ["contentScript.js"],
       "run_at": "document_end"
     }
   ],
