@@ -7,7 +7,7 @@ const imgs = ['0.png', '1.png'];
 
 let response = undefined;
 
-let lastUrl = location.href;
+let lastUrl = '';
 new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
@@ -21,13 +21,13 @@ new MutationObserver(() => {
 
 function onUrlChange() {
     console.log('URL changed!', location.href);
-
+    var interval_instance = undefined;
     (async () => {
         div_text = [...document.getElementsByTagName('div')];
-        setInterval(async function () {
+        interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    if(div.hasProperty('send')) {
+                    if(div.hasOwnProperty('send')) {
                         continue;
                     }
                     empty_objects.push(div.cloneNode(true));
@@ -51,9 +51,9 @@ function onUrlChange() {
             }
             data = await Promise.all(fetch_array);
             for (obj of data) {
-                object['send'] = true;
+                obj['send'] = true;
             };
-            console.log(fetch_array);
+            console.log(data);
 
             all_divs = document.getElementsByTagName('div');
             length = all_divs.length;
@@ -63,18 +63,21 @@ function onUrlChange() {
                 //console.log(div);
                 if (div.hasAttribute('data-testid')) {
                     if (div.getAttribute('data-testid') == 'post-comment-header') {
-                        console.log('jest naglowek');
+                        //console.log('jest naglowek');
                         insert = document.createElement('img');
-                        if (data[counter].is_negative !== undefined) {
-                            var img_number = imgs[data[counter].is_negative];
+                        if (data != null && data[counter] != null && data[counter].is_negative != null) {
+                            img_number = imgs[data[counter].is_negative];
                         } else {
-                            var img_number = '0';
+                            var img_number = '0.png';
                         }
-                        if(div.lastChild.getAttribute('custom')) {
+                        //console.log(div.lastChild);
+                        if(div.lastChild.getAttribute('ai-img-id')) {
                             console.log('jest juz'); //TODO: check if img exists 
+                            continue;
                         }
                         insert.src = chrome.runtime.getURL(`${img_prefix + img_number }`);
-                        insert['custom'] = 'ai4youth'
+                        insert.setAttribute('ai-img-id', counter);
+                        //insert['ai-img-id'] = counter;
                         insert.height = 32;
                         insert.width = 32;
                         insert.style.position = 'absolute';
@@ -88,6 +91,7 @@ function onUrlChange() {
         }, 3000);
 
     })();
+    return interval_instance;
 }
 /*
 losowe_p.map((element, idx, array) => {
