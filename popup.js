@@ -36,32 +36,28 @@ $(function() {
 });
 */
 
-
+var currentAiFlag = 1;
 
 //When button in popup is clicked, change AI type
 document.addEventListener('DOMContentLoaded', () => {
   var aiTypeButton = document.getElementById('btnChange');
-  let currentAiFlag = 1;
 
   chrome.storage.sync.set({aiFlag: currentAiFlag});
 
   aiTypeButton.addEventListener('click', () => {
-    //if hateAI is selected, change to sarcasmAI
+    //if hateAI is selected, change to offensiveAI
     if(currentAiFlag === 1){
       currentAiFlag = 0;
 
-      chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
-        console.log('Current AI is: ' + currentAiFlag);
-      });
+      chrome.storage.sync.set({aiFlag: currentAiFlag}, 
+        console.log('Current AI mode is Offensive Language detection!'));
     }
-    
-    //if sarcasmAI is selected, change to hateAI
-    if(currentAiFlag === 0){
+    //if offensiveAI is selected, change to hateAI
+    else if(currentAiFlag === 0){
       currentAiFlag = 1;
 
-      chrome.storage.sync.set({aiFlag: currentAiFlag}, () => {
-        console.log('Current AI is: ' + currentAIFlag);
-      });
+      chrome.storage.sync.set({aiFlag: currentAiFlag},
+        console.log('Current AI mode is Hate Language detection!'));
     }
     
   });
