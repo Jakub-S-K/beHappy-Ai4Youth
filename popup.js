@@ -1,46 +1,14 @@
-// Initialize butotn with users's prefered color
-/*
-let changeColor = document.getElementById("changeColor");
-
-chrome.storage.sync.get("color", ({ color }) => {
-  changeColor.style.backgroundColor = color;
-});
-
-// When the button is clicked, inject setPageBackgroundColor into current page
-changeColor.addEventListener("click", async () => {
-  let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    function: setPageBackgroundColor,
-  });
-});
-
-// The body of this function will be execuetd as a content script inside the
-// current page
-function setPageBackgroundColor() {
-  chrome.storage.sync.get("color", ({ color }) => {
-    document.body.style.backgroundColor = color;
-  });
-}
-*/
-
-
-/*
-$(function() {
-  $('#btnChange').click(function() {
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-      chrome.tabs.sendMessage(tabs[0].id, {todo: "log"});
-    });
-  });
-});
-*/
-
+//pp as in PopuP -_-
 var currentAiFlag = 1;
+const aiTypeButton = document.getElementById('ppBtnChg');
+const aiTypeHeader = document.getElementById('ppHead');
+const popupBody = document.getElementById('ppBody');
+
+aiTypeHeader.innerHTML = 'Hejt';
 
 //When button in popup is clicked, change AI type
 document.addEventListener('DOMContentLoaded', () => {
-  var aiTypeButton = document.getElementById('btnChange');
+
 
   chrome.storage.sync.set({aiFlag: currentAiFlag});
 
@@ -51,6 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       chrome.storage.sync.set({aiFlag: currentAiFlag}, 
         console.log('Current AI mode is Offensive Language detection!'));
+
+        aiTypeHeader.innerHTML = "Obraźliwe";
+
+        aiTypeHeader.classList.remove('hateStyle');
+        popupBody.classList.remove('hateStyle');
+
+        aiTypeHeader.classList.add('offensiveStyle');
+        popupBody.classList.add('offensiveStyle');
     }
     //if offensiveAI is selected, change to hateAI
     else if(currentAiFlag === 0){
@@ -58,6 +34,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       chrome.storage.sync.set({aiFlag: currentAiFlag},
         console.log('Current AI mode is Hate Language detection!'));
+
+        aiTypeHeader.innerHTML = "Hejt";
+
+        aiTypeHeader.classList.remove('offensiveStyle');
+        popupBody.classList.remove('offensiveStyle');
+
+        aiTypeHeader.classList.add('hateStyle');
+        popupBody.classList.add('hateStyle');
     }
     
   });
