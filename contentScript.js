@@ -39,7 +39,7 @@ function onUrlChange() {
                         text += n.nextElementSibling.innerText;
                         n = n.nextElementSibling;
                     }
-
+                    //console.log(text);
                     fetch_array.push(fetch('http://127.0.0.1:5000/predict', {
                         method: 'POST',
                         headers: {
