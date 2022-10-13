@@ -27,11 +27,11 @@ function onUrlChange() {
         interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    if(div.hasOwnProperty('ai-img-id')) {
+                    /*if(attributeInChildren(div, 'ai-img-id')) {
                         console.log('ma property');
                         
                         continue;
-                    }
+                    }*/
                     empty_objects.push(div.cloneNode(true));
                     //console.log(div.innerText);
                     let text = div.innerText + "\n";
@@ -72,7 +72,7 @@ function onUrlChange() {
                         } else {
                             var img_number = imgs[0];
                         }
-                        //console.log(div.lastChild);
+                        //console.log(div.children[0]);
                         if(attributeInChildren(div.children[0], 'ai-img-id')) {
                             console.log('jest juz'); //TODO: check if img exists 
                             continue;
@@ -97,15 +97,20 @@ function onUrlChange() {
 }
 
 function attributeInChildren(parent, name) {
+    console.log(parent);
     var node = parent.children[0];
-    if (!node.getAttribute(name)) {
+    if (node.getAttribute(name)) {
+        console.log('pierwsze')
         return true;
     }
     while (node.nextElementSibling != null) {
-        if (!node.getAttribute(name)) {
+        if (node.getAttribute(name)) {
             return true;
         }
         node = node.nextElementSibling;
+    }
+    if (node.getAttribute(name)) {
+        return true;
     }
     return false;
 }
