@@ -24,14 +24,14 @@ function onUrlChange() {
     var interval_instance = undefined;
     (async () => {
         div_text = [...document.getElementsByTagName('div')];
-        interval_instance = setTimeout(async function () {
+        interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    if(div.hasOwnProperty('ai-img-id')) {
+                    /*if(attributeInChildren(div, 'ai-img-id')) {
                         console.log('ma property');
                         
                         continue;
-                    }
+                    }*/
                     empty_objects.push(div.cloneNode(true));
                     //console.log(div.innerText);
                     let text = div.innerText + "\n";
