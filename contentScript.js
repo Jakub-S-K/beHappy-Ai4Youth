@@ -27,7 +27,9 @@ function onUrlChange() {
         interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    if(div.hasOwnProperty('send')) {
+                    if(div.hasOwnProperty('ai-img-id')) {
+                        console.log('ma property');
+                        
                         continue;
                     }
                     empty_objects.push(div.cloneNode(true));
@@ -68,10 +70,10 @@ function onUrlChange() {
                         if (data != null && data[counter] != null && data[counter].is_negative != null) {
                             img_number = imgs[data[counter].is_negative];
                         } else {
-                            var img_number = '0.png';
+                            var img_number = imgs[0];
                         }
                         //console.log(div.lastChild);
-                        if(div.lastChild.getAttribute('ai-img-id')) {
+                        if(attributeInChildren(div.children[0], 'ai-img-id')) {
                             console.log('jest juz'); //TODO: check if img exists 
                             continue;
                         }
@@ -93,6 +95,21 @@ function onUrlChange() {
     })();
     return interval_instance;
 }
+
+function attributeInChildren(parent, name) {
+    var node = parent.children[0];
+    if (!node.getAttribute(name)) {
+        return true;
+    }
+    while (node.nextElementSibling != null) {
+        if (!node.getAttribute(name)) {
+            return true;
+        }
+        node = node.nextElementSibling;
+    }
+    return false;
+}
+
 /*
 losowe_p.map((element, idx, array) => {
     if (element.innerHTML) {
