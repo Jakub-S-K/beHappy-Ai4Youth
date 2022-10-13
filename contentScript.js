@@ -27,11 +27,11 @@ function onUrlChange() {
         interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    /*if(attributeInChildren(div, 'ai-img-id')) {
+                    if(attributeInChildren(div, 'ai-img-id')) {
                         console.log('ma property');
                         
                         continue;
-                    }*/
+                    }
                     empty_objects.push(div.cloneNode(true));
                     //console.log(div.innerText);
                     let text = div.innerText + "\n";
@@ -71,6 +71,10 @@ function onUrlChange() {
                             img_number = imgs[data[counter].is_negative];
                         } else {
                             var img_number = imgs[0];
+                            
+                            //if button TODO
+                            div.nextElementSibling.style.textShadow = '0 0 10px #000';
+                            div.nextElementSibling.style.color = 'transparent';
                         }
                         //console.log(div.children[0]);
                         if(attributeInChildren(div.children[0], 'ai-img-id')) {
@@ -79,7 +83,7 @@ function onUrlChange() {
                         }
                         insert.src = chrome.runtime.getURL(`${img_prefix + img_number }`);
                         insert.setAttribute('ai-img-id', counter);
-                        //insert['ai-img-id'] = counter;
+                        insert['ai-img-id'] = counter;
                         insert.height = 32;
                         insert.width = 32;
                         insert.style.position = 'absolute';

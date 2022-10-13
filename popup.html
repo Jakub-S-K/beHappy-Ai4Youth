@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="button.css">
+    <link rel="stylesheet" href="popup.css">
     
     <script src="popup.js" defer></script>
 </head>
@@ -11,10 +11,13 @@
 
   <div id="ppBody" class="wrapper hateStyle">
     
-    <h1 id="ppHead" class="nameHeader hateStyle"></h1>
+    <h1 id="ppHead" class="nameHeader"></h1>
 
-    <input type="submit" id="ppBtnChg" class="btnChange" value="Zmień">
-  
+    <div class="btnWrapper">
+      <input type="submit" id="ppBtnChg" class="btnChange defButton hateStyle" value="Zmień">
+      <input type="submit" id="ppBtnBlur" class="btnBlur defButton hateStyle" value="Blur">
+    </div>
+
   </div>
 
 </body>
