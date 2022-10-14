@@ -1,16 +1,29 @@
 .addonBlur > p{
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     color: transparent;
-
-    transition: all .2s ease-in;
-    transition-delay: .5s;
 }
 
 .addonBlur:hover > p{
-    text-shadow: none;
-    color: black;
+    animation: .4s ease-in .5s forwards blurAnimation;
 }
 
 .addonBlur > p > a{
     text-shadow: none;
+}
+
+@keyframes blurAnimation {
+    0%{
+        text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        color: transparent;
+    }
+    25%{
+        color: #ff7979;
+    }
+    75%{
+        color: black;
+    }
+    100%{
+        text-shadow: none;
+        color: black;
+    }
 }
