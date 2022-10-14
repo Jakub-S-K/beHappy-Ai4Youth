@@ -74,6 +74,7 @@ function onUrlChange() {
 
             all_divs = document.getElementsByTagName('div');
             length = all_divs.length;
+            console.log(data);
             for (let i = 0; i < length; i++) {
                 div = all_divs[i];
                 if (div.hasAttribute('data-testid')) {
@@ -81,7 +82,7 @@ function onUrlChange() {
                         if (data != null && data[counter] != null && data[counter].is_negative != null) {
                             insert = document.createElement('img');
                             img_number = imgs[data[counter].is_negative];
-
+                            //console.log(data[counter].is_negative);
                             if (data[counter].is_negative === 1) {
 
                                 chrome.storage.sync.get({ blurFlag: blur });
