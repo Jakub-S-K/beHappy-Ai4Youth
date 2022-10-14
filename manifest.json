@@ -11,6 +11,7 @@
     {
       "matches": ["https://www.reddit.com/*"],
       "js": ["contentScript.js"],
+      "css": ["blur.css"],
       "run_at": "document_end"
     }
   ],

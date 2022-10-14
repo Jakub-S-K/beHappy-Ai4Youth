@@ -85,13 +85,12 @@ function onUrlChange() {
                             //console.log(data[counter].is_negative);
                             if (data[counter].is_negative === 1) {
 
-                                chrome.storage.sync.get({ blurFlag: blur });
-                                console.log('Blur: ' + blur);
-                                if(div.nextElementSibling != null && (div.nextElementSibling).firstChild != null){
+                                //chrome.storage.sync.get({ blurFlag: blur });
+                                //console.log('Blur: ' + blur);
+                                if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild).firstChild != null){
                                     if (blur === 1) {
-                                        let parToBlur = (div.nextElementSibling).firstChild;
-                                        parToBlur.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.5)';
-                                        parToBlur.style.color = 'transparent !important';
+                                        let parToBlur = ((div.nextElementSibling).firstChild);
+                                        parToBlur.classList.add('addonBlur');
                                     }
                                 }
 
