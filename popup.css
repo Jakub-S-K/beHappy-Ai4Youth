@@ -1,0 +1,100 @@
+/*TODO*/
+/*TOBECONTINUED*/
+
+* {
+  box-sizing: border-box;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+}
+
+.hateStyle{
+  color: #ca3e3e;
+}
+
+.offensiveStyle{
+  color: #ec8320;
+}
+
+.wrapper{
+  width: 170px;
+  height: 120px;
+
+  background-color: rgb(176, 198, 221);
+}
+
+.nameHeader{
+  text-align: center;
+  padding-top: 10px;
+}
+
+.btnWrapper{
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.defButton{
+  text-decoration: none;
+  text-align: center;
+  color: #ffffff;
+  cursor: pointer;
+
+  background-color: #48abe0;
+  border: none;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 17px;
+  width: 60px;
+  height: 60px;
+  box-shadow: 0 2px 4px #2f4f4f;
+
+  transition: all .05s ease;
+}
+
+.defButton:active{
+  background-color: #48abe0;
+  box-shadow: 0 0 2px #2f4f4f;
+  transform: translateY(2px);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*.btnChange{
+  font-size: 20px;
+
+  padding: 10px 20px;
+  border-radius: 5px;
+
+  background-color: #3dc449;
+  box-shadow: inset 0 -0.6em 0 -0.35em rgba(0, 0, 0, 0.15);
+
+  transition: .04s ease-in-out;
+}
+
+.btnChange:active{
+  transform: translateY(2px);
+}
+
+.btnBlur{
+  background-color: #333fff;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: inset 2px solid #000;
+
+  transition: .04s ease-in-out;
+}*/

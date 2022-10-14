@@ -3,6 +3,7 @@ let fetch_array = [];
 let data = [];
 const img_prefix = '/content_img/';
 const imgs = ['0.png', '1.png'];
+let blur = 1;
 
 var fetch_counter = 0;
 var counter = 0;
@@ -80,9 +81,22 @@ function onUrlChange() {
                         if (data != null && data[counter] != null && data[counter].is_negative != null) {
                             insert = document.createElement('img');
                             img_number = imgs[data[counter].is_negative];
-
+                            
                             if (attributeInChildren(div.children[0], 'ai-img-id')) {
                                 continue;
+                            }
+                            
+                            if (imgs[data[counter].is_negative] === 1) {
+                            
+                            chrome.storage.sync.get({blurFlag: blur});
+                            console.log('Blur: ' + blur);
+                            if(blur === 1){
+                                let parToBlur = (div.nextElementSibling).firstChild;
+                                parToBlur.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.9)';
+                                parToBlur.style.color = 'transparent';
+                            }
+
+                            
                             }
                             insert.src = chrome.runtime.getURL(`${img_prefix + img_number}`);
                             insert.setAttribute('ai-img-id', counter);
@@ -92,9 +106,7 @@ function onUrlChange() {
                             insert.style.position = 'absolute';
                             insert.style.right = '0px';
                             div.children[0].appendChild(insert);
-                            counter++;
-
-
+                            counter++;               
                         }
                     }
                 }

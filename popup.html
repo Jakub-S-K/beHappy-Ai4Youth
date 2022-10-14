@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
+    <meta charset="UTF-8">
 
-    <link rel="stylesheet" href="button.css">
-  
-  </head>
-  <body>
-    <button id="changeColor"></button>
-    <script src="popup.js"></script>
+    <link rel="stylesheet" href="popup.css">
+    
+    <script src="popup.js" defer></script>
+</head>
+<body>
 
-    <input type="submit" id="btnChange" value="Zmien">
+  <div id="ppBody" class="wrapper hateStyle">
+    
+    <h1 id="ppHead" class="nameHeader"></h1>
 
-  </body>
+    <div class="btnWrapper">
+      <input type="submit" id="ppBtnChg" class="btnChange defButton hateStyle" value="Zmień">
+      <input type="submit" id="ppBtnBlur" class="btnBlur defButton hateStyle" value="Blur">
+    </div>
+
+  </div>
+
+</body>
 </html>
