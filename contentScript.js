@@ -40,14 +40,14 @@ function onUrlChange() {
             //console.log(div_text.length);
             for (let x = fetch_counter; x < comment_div.length; x++) {
                 let div = comment_div[x];
-
+                div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
                 let text = div.innerText + "\n";
                 n = div.children;
                 while (n.nextElementSibling != null) {
                     text += n.nextElementSibling.innerText;
                     n = n.nextElementSibling;
                 }
-
+                console.log(fetch_counter + ' text: ' + text);
                 fetch_array.push(fetch('http://127.0.0.1:5000/predict', {
                     method: 'POST',
                     headers: {
@@ -66,7 +66,6 @@ function onUrlChange() {
                 fetch_counter++;
                 //console.log(text);
             }
-
             data.push(... await Promise.all(fetch_array));
             fetch_array = []
 
@@ -82,16 +81,19 @@ function onUrlChange() {
                         if (data != null && data[counter] != null && data[counter].is_negative != null) {
                             insert = document.createElement('img');
                             img_number = imgs[data[counter].is_negative];
-                            //console.log(data[counter].is_negative);
                             if (data[counter].is_negative === 1) {
-
+                                
                                 //chrome.storage.sync.get({ blurFlag: blur });
-                                //console.log('Blur: ' + blur);
+                                ////console.log('Blur: ' + blur);
                                 if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild).firstChild != null){
+                                    //img_number = imgs[data[div.nextElementSibling]]
+                                    console.log(div.nextElementSibling);
                                     if (blur === 1) {
                                         let parToBlur = ((div.nextElementSibling).firstChild);
                                         parToBlur.classList.add('addonBlur');
                                     }
+                                } else {
+                                    continue;
                                 }
 
                             }
