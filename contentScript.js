@@ -19,6 +19,8 @@ new MutationObserver(() => {
         lastUrl = url;
         data = [];
         fetch_counter = 0;
+        filtered_div = [];
+        new_divs = [];
         counter = 0;
         fetch_array = [];
         onUrlChange();
@@ -43,9 +45,10 @@ function onUrlChange() {
             }
             
             comment_div.push(...new_divs);
+            new_divs = [];
             //console.log(comment_div);
             for (let x = fetch_counter; x < comment_div.length; x++) {
-                //console.log(div_text.length);
+                //console.log(fetch_counter);
                 let div = comment_div[x];
                 div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
                 let text = div.innerText + "\n";
@@ -110,6 +113,9 @@ function onUrlChange() {
                                     if (blur === 1) {
                                         let parToBlur = ((div.nextElementSibling).firstChild);
                                         parToBlur.classList.add('addonBlur');
+                                    } else {
+                                        let parToBlur = ((div.nextElementSibling).firstChild);
+                                        parToBlur.classList.remove('addonBlur');
                                     }
                                 } else {
                                     continue;
