@@ -87,12 +87,13 @@ function onUrlChange() {
 
                                 chrome.storage.sync.get({ blurFlag: blur });
                                 console.log('Blur: ' + blur);
-                                if (blur === 1) {
-                                    let parToBlur = (div.nextElementSibling).firstChild;
-                                    parToBlur.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.9)';
-                                    parToBlur.style.color = 'transparent';
+                                if(div.nextElementSibling != null && (div.nextElementSibling).firstChild != null){
+                                    if (blur === 1) {
+                                        let parToBlur = (div.nextElementSibling).firstChild;
+                                        parToBlur.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.5)';
+                                        parToBlur.style.color = 'transparent !important';
+                                    }
                                 }
-
 
                             }
                             if (attributeInChildren(div.children[0], 'ai-img-id')) {
