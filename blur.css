@@ -1,9 +1,13 @@
-.addonBlur:nth-child(n){
+.addonBlur > p{
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     color: transparent;
 }
 
-.addonBlur:hover{
+.addonBlur:hover > p{
     text-shadow: none;
     color: black;
+}
+
+.addonBlur > p > a{
+    text-shadow: none;
 }
