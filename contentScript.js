@@ -1,6 +1,6 @@
 //console.log(div_text);
-let fetch_array = [];
-let data = [];
+var fetch_array = [];
+var data = [];
 const img_prefix = '/content_img/';
 const imgs = ['0.png', '1.png'];
 let blur = 1;
@@ -8,14 +8,21 @@ let blur = 1;
 var fetch_counter = 0;
 var counter = 0;
 var filtered_div = [];
+var comment_div = [];
 var new_divs = [];
 
 let response = undefined;
+var interval_instance = undefined;
 
 let lastUrl = '';
 new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
+        if (interval_instance !== undefined) {
+            console.log('reset instance');
+            clearInterval(interval_instance);
+        }
+        console.log('brum nowa instancja');
         lastUrl = url;
         data = [];
         fetch_counter = 0;
@@ -23,17 +30,17 @@ new MutationObserver(() => {
         new_divs = [];
         counter = 0;
         fetch_array = [];
-        onUrlChange();
+        comment_div = [];
+        interval_inst = onUrlChange();
     }
 }).observe(document, { subtree: true, childList: true });
 
 function onUrlChange() {
     console.log('URL changed!', location.href);
-    var interval_instance = undefined;
     (async () => {
         interval_instance = setInterval(async function () {
             div_text = [...document.getElementsByTagName('div')];
-            let comment_div = [];
+            comment_div = [];
             for (let i = 0; i < div_text.length; i++) {
                 if (div_text[i].classList?.contains('RichTextJSON-root')) {
                     if (div_text[i].parentNode.hasAttribute('ai-fetch-count')) {
@@ -50,13 +57,14 @@ function onUrlChange() {
             for (let x = fetch_counter; x < comment_div.length; x++) {
                 //console.log(fetch_counter);
                 let div = comment_div[x];
-                div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
-                let text = div.innerText + "\n";
-                n = div.children;
-                while (n.nextElementSibling != null) {
-                    text += n.nextElementSibling.innerText;
-                    n = n.nextElementSibling;
+                let text = div.innerText;
+
+                if (text == null) {
+                    continue;
                 }
+
+                div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
+
                 //console.log(fetch_counter + ' text: ' + text);
                 fetch_array.push(fetch('http://127.0.0.1:5000/predict', {
                     method: 'POST',
@@ -76,8 +84,10 @@ function onUrlChange() {
                 fetch_counter++;
                 //console.log(text);
             }
-            data.push(... await Promise.all(fetch_array));
-            fetch_array = []
+            const fetch_result = await Promise.all(fetch_array);
+            console.log(fetch_result);
+            data = data.concat(fetch_result);
+            fetch_array = [];
 
             //console.log(data);
 
@@ -88,22 +98,22 @@ function onUrlChange() {
                 div = all_divs[i];
                 if (div.hasAttribute('data-testid')) {
                     if (div.getAttribute('data-testid') == 'post-comment-header') {
-                        if (data != null && data[counter] != null && data[counter].is_negative != null) {
+                        if (data != null) {
                             insert = document.createElement('img');
-                            let img_number = imgs[data[counter].is_negative];
+                            let img_number = imgs[0];
                             let ai_fetch_count = 0;
 
                             if(div.nextElementSibling != null && (div.nextElementSibling).firstChild != null){
                                 ai_fetch_count = div.nextElementSibling.getAttribute('ai-fetch-count');
                                 //console.log(ai_fetch_count);
-                                if (data[ai_fetch_count].is_negative !== null) {
+                                if (data[ai_fetch_count]?.is_negative != null) {
                                     img_number = imgs[data[ai_fetch_count].is_negative];
                                 }
                             } else {
                                 continue;
                             }
 
-                            if (data[ai_fetch_count].is_negative === 1) {
+                            if (data[ai_fetch_count]?.is_negative === 1) {
                                 
                                 //chrome.storage.sync.get({ blurFlag: blur });
                                 ////console.log('Blur: ' + blur);
