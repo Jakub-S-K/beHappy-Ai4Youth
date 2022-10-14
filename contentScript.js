@@ -4,6 +4,7 @@ let fetch_array = [];
 let data = [];
 const img_prefix = '/content_img/';
 const imgs = ['0.png', '1.png'];
+let blur = 1;
 
 let response = undefined;
 
@@ -27,11 +28,11 @@ function onUrlChange() {
         interval_instance = setInterval(async function () {
             for (div of div_text) {
                 if (div.classList?.contains('RichTextJSON-root')) {
-                    if(attributeInChildren(div, 'ai-img-id')) {
+                    /*if(attributeInChildren(div, 'ai-img-id')) {
                         console.log('ma property');
                         
                         continue;
-                    }
+                    }*/
                     empty_objects.push(div.cloneNode(true));
                     //console.log(div.innerText);
                     let text = div.innerText + "\n";
@@ -55,7 +56,7 @@ function onUrlChange() {
             for (obj of data) {
                 obj['send'] = true;
             };
-            console.log(data);
+            //console.log(data);
 
             all_divs = document.getElementsByTagName('div');
             length = all_divs.length;
@@ -71,19 +72,24 @@ function onUrlChange() {
                             img_number = imgs[data[counter].is_negative];
                         } else {
                             var img_number = imgs[0];
-                            
-                            //if button TODO
-                            div.nextElementSibling.style.textShadow = '0 0 10px #000';
-                            div.nextElementSibling.style.color = 'transparent';
+
+                            chrome.storage.sync.get({blurFlag: blur});
+                            console.log('Blur: ' + blur);
+                            if(blur === 1){
+                                let parToBlur = (div.nextElementSibling).firstChild;
+                                parToBlur.style.textShadow = '0 0 5px rgba(0, 0, 0, 0.9)';
+                                parToBlur.style.color = 'transparent';
+                            }
+
                         }
                         //console.log(div.children[0]);
                         if(attributeInChildren(div.children[0], 'ai-img-id')) {
-                            console.log('jest juz'); //TODO: check if img exists 
+                            //console.log('jest juz'); //TODO: check if img exists 
                             continue;
                         }
                         insert.src = chrome.runtime.getURL(`${img_prefix + img_number }`);
                         insert.setAttribute('ai-img-id', counter);
-                        insert['ai-img-id'] = counter;
+                        //insert['ai-img-id'] = counter;
                         insert.height = 32;
                         insert.width = 32;
                         insert.style.position = 'absolute';
@@ -101,7 +107,7 @@ function onUrlChange() {
 }
 
 function attributeInChildren(parent, name) {
-    console.log(parent);
+    //console.log(parent);
     var node = parent.children[0];
     if (node.getAttribute(name)) {
         console.log('pierwsze')
@@ -129,7 +135,6 @@ losowe_p.map((element, idx, array) => {
         //console.log(el.innerHTML);
         empty_objects.push(temp);
     }
-
 });
 console.log(JSON.stringify(empty_objects)); //potezny obiekt
 const options = {
