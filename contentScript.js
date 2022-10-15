@@ -10,6 +10,7 @@ var counter = 0;
 var filtered_div = [];
 var comment_div = [];
 var new_divs = [];
+var div_text;
 
 let response = undefined;
 var interval_instance = undefined;
@@ -22,16 +23,22 @@ new MutationObserver(() => {
             console.log('reset instance');
             clearInterval(interval_instance);
         }
-        console.log('brum nowa instancja');
+        console.log('new timer instance');
+
+        for (let i = 0; i < comment_div.length; i++) {
+            comment_div[i].setAttribute('next-page', true);
+        }
+
         lastUrl = url;
         data = [];
+        div_text = [];
         fetch_counter = 0;
         filtered_div = [];
         new_divs = [];
         counter = 0;
         fetch_array = [];
         comment_div = [];
-        interval_inst = onUrlChange();
+        interval_instance = onUrlChange();
     }
 }).observe(document, { subtree: true, childList: true });
 
@@ -44,7 +51,9 @@ function onUrlChange() {
             for (let i = 0; i < div_text.length; i++) {
                 if (div_text[i].classList?.contains('RichTextJSON-root')) {
                     if (div_text[i].parentNode.hasAttribute('ai-fetch-count')) {
-                        comment_div.push(div_text[i]);
+                        if (!div_text[i].hasAttribute('next-page')) {
+                            comment_div.push(div_text[i]);
+                        }
                     } else {
                         new_divs.push(div_text[i]);
                     }
@@ -59,7 +68,7 @@ function onUrlChange() {
                 let div = comment_div[x];
                 let text = div.innerText;
 
-                if (text == null) {
+                if (text.length === 0) {
                     continue;
                 }
 
@@ -85,7 +94,7 @@ function onUrlChange() {
                 //console.log(text);
             }
             const fetch_result = await Promise.all(fetch_array);
-            console.log(fetch_result);
+            //console.log(fetch_result);
             data = data.concat(fetch_result);
             fetch_array = [];
 
@@ -105,6 +114,10 @@ function onUrlChange() {
 
                             if(div.nextElementSibling != null && (div.nextElementSibling).firstChild != null){
                                 ai_fetch_count = div.nextElementSibling.getAttribute('ai-fetch-count');
+                                if (div.nextElementSibling.firstChild.getAttribute('next-page')) {
+                                    //console.log('skip img');
+                                    continue;
+                                }
                                 //console.log(ai_fetch_count);
                                 if (data[ai_fetch_count]?.is_negative != null) {
                                     img_number = imgs[data[ai_fetch_count].is_negative];
