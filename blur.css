@@ -1,13 +1,17 @@
-.addonBlur > p{
+.addonBlur > p, 
+.addonBlur > ol > li,
+.addonBlur > ul > li {
     text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
     color: transparent;
 }
 
-.addonBlur:hover > p{
+.addonBlur:hover > p,
+.addonBlur:hover > ol > li,
+.addonBlur:hover > ul > li {
     animation: .4s ease-in .5s forwards blurAnimation;
 }
 
-.addonBlur > p > a{
+.addonBlur > p > a {
     text-shadow: none;
 }
 
