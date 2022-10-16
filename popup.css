@@ -14,22 +14,24 @@
 
 .wrapper{
   width: 170px;
-  height: 120px;
+  height: 140px;
 
-  background-color: rgb(176, 198, 221);
+  background-color: #DDDAB2;
 }
 
 .nameHeader{
   text-align: center;
   padding-top: 10px;
+  margin-bottom: 5px;
+  font-size: 1.8rem;
 }
 
 .btnWrapper{
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   display: flex;
   justify-content: space-between;
-  gap: 20px;
+  gap: 25px;
 }
 
 .defButton{
@@ -38,21 +40,21 @@
   color: #ffffff;
   cursor: pointer;
 
-  background-color: #48abe0;
+  background-color: #5f5383;
   border: none;
   border-radius: 20px;
   padding: 5px;
   font-size: 17px;
   width: 60px;
   height: 60px;
-  box-shadow: 0 2px 4px #2f4f4f;
+  box-shadow: 0 2px 4px #2c1868;
 
   transition: all .05s ease;
 }
 
 .defButton:active{
-  background-color: #48abe0;
-  box-shadow: 0 0 2px #2f4f4f;
+  background-color: #5f5383;
+  box-shadow: 0 0 2px #2c1868;
   transform: translateY(2px);
 }
 
