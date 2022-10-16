@@ -17,7 +17,7 @@ Ai4Youth
     - flask
     - flask_cors
 
-Install dependencies with:
+Install dependencies via cmd with:
 
 ```pip install -r requirements.txt``` 
 
