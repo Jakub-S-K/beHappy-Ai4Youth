@@ -1,7 +1,7 @@
 from audioop import cross
 from requests import request
 from tensorflow import keras
-from tensorflow.keras.preprocessing.sequence import pad_sequences
+
 import pickle
 
 import json
@@ -26,22 +26,21 @@ def predict_endpoint():
 
 
 def predict_sentiment(text):
-    tw = tokenizer.texts_to_sequences([text])
-    tw = pad_sequences(tw, maxlen=250)
+    tw = tfidf.transform([text]).toarray()
     prediction = model.predict(tw)
-    if prediction[0][0] > prediction[0][1]:
+    if prediction[0][0] > 0.5:
         return 1
     else:
         return 0
     #print("Predicted label: ", sentiment_label[1][prediction])
 
 
-tokenizer = None
+tfidf = None
 
-with open("tokenizer_twitter_save.dat", "rb") as file:
-    tokenizer = pickle.load(file)
+with open("tfidf.dat", "rb") as file:
+    tfidf = pickle.load(file)
 
-model = keras.models.load_model("model2.h5")
+model = keras.models.load_model("Dense8-4.h5")
 
 #predict_sentiment("test 123")
 
