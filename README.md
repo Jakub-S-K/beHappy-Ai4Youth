@@ -17,7 +17,7 @@ Ai4Youth
     - flask
     - flask_cors
 
-Install dependencies with:
+Install dependencies via cmd with:
 
 ```pip install -r requirements.txt``` 
 
@@ -86,7 +86,11 @@ Install dependencies with:
 - hardware
   ```
   CPUs: Apple Silicon M1 8 cores, Intel i5-9300h, Intel i5-7400
-  GPU: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, GPU 1660 Super
+  GPUs: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, GPU 1660 Super
+  ```
+- RAM
+  ```
+    Tested on platforms with at least 12GB of RAM
   ```
 
 ## References
