@@ -16,18 +16,13 @@ var interval_instance = undefined;
 
 let lastUrl = '';
 
+//1 - on 0 - off
 var blurState = 1;
-//1 == hate, 0 == offensive
-var aiMode = 1;
 
 chrome.runtime.onMessage.addListener(
     function(request, sender, sendResponse) {
         if(request.blurState === 0 || request.blurState === 1){
             blurState = request.blurState;
-        }
-
-        if(request.aiMode === 0 || request.aiMode === 1){
-            aiMode = request.aiMode;
         }
     }
 );
@@ -96,7 +91,7 @@ function onUrlChange() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ quote: text, aiMode: aiMode })
+                    body: JSON.stringify({quote: text})
                 })
                     .then(response => response.json())
                     .then(function (json) {
@@ -144,13 +139,13 @@ function onUrlChange() {
 
                             if (data[ai_fetch_count]?.is_negative === 1) {
                                                                
-                                if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild).firstChild != null){
+                                if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild) != null){
                                     if(blurState === 1){
                                         let parToBlur = ((div.nextElementSibling).firstChild);
                                         parToBlur.classList.add('addonBlur');
                                     }else if (blurState === 0){
                                         let parToBlur = ((div.nextElementSibling).firstChild);
-                                        parToBlur.classList.remove('addonBlur')
+                                        parToBlur.classList.remove('addonBlur');
                                     }
                                 } else {
                                     continue;

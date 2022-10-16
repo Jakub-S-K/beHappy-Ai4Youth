@@ -37,10 +37,11 @@ def predict_sentiment(text):
 
 tfidf = None
 
-with open("tfidf-2.dat", "rb") as file:
+with open("tfidf-3.dat", "rb") as file:
     tfidf = pickle.load(file)
 
-model = keras.models.load_model("Dense32.h5")
+
+model = keras.models.load_model("Dense32-new-tfidf.h5")
 
 #predict_sentiment("test 123")
 
