@@ -1,52 +1,95 @@
 //console.log(div_text);
-let fetch_array = [];
-let data = [];
+var fetch_array = [];
+var data = [];
 const img_prefix = '/content_img/';
 const imgs = ['0.png', '1.png'];
-let blur = 1;
 
 var fetch_counter = 0;
 var counter = 0;
 var filtered_div = [];
+var comment_div = [];
+var new_divs = [];
+var div_text;
 
 let response = undefined;
+var interval_instance = undefined;
 
 let lastUrl = '';
+
+var blurState = 1;
+//1 == hate, 0 == offensive
+var aiMode = 1;
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.blurState === 0 || request.blurState === 1){
+            blurState = request.blurState;
+        }
+
+        if(request.aiMode === 0 || request.aiMode === 1){
+            aiMode = request.aiMode;
+        }
+    }
+);
+
 new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
+        if (interval_instance !== undefined) {
+            console.log('reset instance');
+            clearInterval(interval_instance);
+        }
+        console.log('new timer instance');
+
+        for (let i = 0; i < comment_div.length; i++) {
+            comment_div[i].setAttribute('next-page', true);
+        }
+
         lastUrl = url;
         data = [];
+        div_text = [];
         fetch_counter = 0;
+        filtered_div = [];
+        new_divs = [];
         counter = 0;
         fetch_array = [];
-        onUrlChange();
+        comment_div = [];
+        interval_instance = onUrlChange();
     }
 }).observe(document, { subtree: true, childList: true });
 
 function onUrlChange() {
     console.log('URL changed!', location.href);
-    var interval_instance = undefined;
     (async () => {
         interval_instance = setInterval(async function () {
             div_text = [...document.getElementsByTagName('div')];
-            let comment_div = [];
+            comment_div = [];
             for (let i = 0; i < div_text.length; i++) {
                 if (div_text[i].classList?.contains('RichTextJSON-root')) {
-                    comment_div.push(div_text[i]);
+                    if (div_text[i].parentNode.hasAttribute('ai-fetch-count')) {
+                        if (!div_text[i].hasAttribute('next-page')) {
+                            comment_div.push(div_text[i]);
+                        }
+                    } else {
+                        new_divs.push(div_text[i]);
+                    }
                 }
             }
+            
+            comment_div.push(...new_divs);
+            new_divs = [];
             //console.log(comment_div);
-            //console.log(div_text.length);
             for (let x = fetch_counter; x < comment_div.length; x++) {
+                //console.log(fetch_counter);
                 let div = comment_div[x];
-                div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
-                let text = div.innerText + "\n";
-                n = div.children;
-                while (n.nextElementSibling != null) {
-                    text += n.nextElementSibling.innerText;
-                    n = n.nextElementSibling;
+                let text = div.innerText;
+
+                if (text.length === 0) {
+                    continue;
                 }
+
+                div.parentNode.setAttribute('ai-fetch-count', fetch_counter);
+
                 //console.log(fetch_counter + ' text: ' + text);
                 fetch_array.push(fetch('http://127.0.0.1:5000/predict', {
                     method: 'POST',
@@ -66,8 +109,10 @@ function onUrlChange() {
                 fetch_counter++;
                 //console.log(text);
             }
-            data.push(... await Promise.all(fetch_array));
-            fetch_array = []
+            const fetch_result = await Promise.all(fetch_array);
+            //console.log(fetch_result);
+            data = data.concat(fetch_result);
+            fetch_array = [];
 
             //console.log(data);
 
@@ -78,19 +123,34 @@ function onUrlChange() {
                 div = all_divs[i];
                 if (div.hasAttribute('data-testid')) {
                     if (div.getAttribute('data-testid') == 'post-comment-header') {
-                        if (data != null && data[counter] != null && data[counter].is_negative != null) {
+                        if (data != null) {
                             insert = document.createElement('img');
-                            img_number = imgs[data[counter].is_negative];
-                            if (data[counter].is_negative === 1) {
-                                
-                                //chrome.storage.sync.get({ blurFlag: blur });
-                                ////console.log('Blur: ' + blur);
+                            let img_number = imgs[0];
+                            let ai_fetch_count = 0;
+
+                            if(div.nextElementSibling != null && (div.nextElementSibling).firstChild != null){
+                                ai_fetch_count = div.nextElementSibling.getAttribute('ai-fetch-count');
+                                if (div.nextElementSibling.firstChild.getAttribute('next-page')) {
+                                    //console.log('skip img');
+                                    continue;
+                                }
+                                //console.log(ai_fetch_count);
+                                if (data[ai_fetch_count]?.is_negative != null) {
+                                    img_number = imgs[data[ai_fetch_count].is_negative];
+                                }
+                            } else {
+                                continue;
+                            }
+
+                            if (data[ai_fetch_count]?.is_negative === 1) {
+                                                               
                                 if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild).firstChild != null){
-                                    //img_number = imgs[data[div.nextElementSibling]]
-                                    //console.log(div.nextElementSibling);
-                                    if (blur === 1) {
+                                    if(blurState === 1){
                                         let parToBlur = ((div.nextElementSibling).firstChild);
                                         parToBlur.classList.add('addonBlur');
+                                    }else if (blurState === 0){
+                                        let parToBlur = ((div.nextElementSibling).firstChild);
+                                        parToBlur.classList.remove('addonBlur')
                                     }
                                 } else {
                                     continue;
