@@ -97,4 +97,4 @@ Install dependencies via cmd with:
 - Ai4Youth resources
 - [Keras documentation](https://keras.io)
 - [Stack Overflow](https://stackoverflow.com)
-  
+- [Our project's repository](https://github.com/Jakub-S-K/beHappy-Ai4Youth)  
