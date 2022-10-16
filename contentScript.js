@@ -3,7 +3,6 @@ var fetch_array = [];
 var data = [];
 const img_prefix = '/content_img/';
 const imgs = ['0.png', '1.png'];
-let blur = 1;
 
 var fetch_counter = 0;
 var counter = 0;
@@ -16,6 +15,23 @@ let response = undefined;
 var interval_instance = undefined;
 
 let lastUrl = '';
+
+var blurState = 1;
+//1 == hate, 0 == offensive
+var aiMode = 1;
+
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+        if(request.blurState === 0 || request.blurState === 1){
+            blurState = request.blurState;
+        }
+
+        if(request.aiMode === 0 || request.aiMode === 1){
+            aiMode = request.aiMode;
+        }
+    }
+);
+
 new MutationObserver(() => {
     const url = location.href;
     if (url !== lastUrl) {
@@ -127,18 +143,14 @@ function onUrlChange() {
                             }
 
                             if (data[ai_fetch_count]?.is_negative === 1) {
-                                
-                                //chrome.storage.sync.get({ blurFlag: blur });
-                                ////console.log('Blur: ' + blur);
+                                                               
                                 if(div.nextElementSibling != null && ((div.nextElementSibling).firstChild).firstChild != null){
-                                    //img_number = imgs[data[div.nextElementSibling]]
-                                    //console.log(div.nextElementSibling);
-                                    if (blur === 1) {
+                                    if(blurState === 1){
                                         let parToBlur = ((div.nextElementSibling).firstChild);
                                         parToBlur.classList.add('addonBlur');
-                                    } else {
+                                    }else if (blurState === 0){
                                         let parToBlur = ((div.nextElementSibling).firstChild);
-                                        parToBlur.classList.remove('addonBlur');
+                                        parToBlur.classList.remove('addonBlur')
                                     }
                                 } else {
                                     continue;
