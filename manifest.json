@@ -1,7 +1,7 @@
 {
   "name": "beHappy",
   "description": "beHappy is an extension that takes care of YOUR good mood! If you are feeling under the weather just turn it on and beHappy without all the hate!",
-  "version": "0.5",
+  "version": "1.0",
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
