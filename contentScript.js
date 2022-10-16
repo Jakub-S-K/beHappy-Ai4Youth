@@ -96,7 +96,7 @@ function onUrlChange() {
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ quote: text })
+                    body: JSON.stringify({ quote: text, aiMode: aiMode })
                 })
                     .then(response => response.json())
                     .then(function (json) {
