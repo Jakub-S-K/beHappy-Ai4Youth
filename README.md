@@ -44,6 +44,7 @@ Install dependencies via cmd with:
 |—— .DS_Store
 |—— .gitignore
 |—— background.js
+|—— Ai4Youth_beHappy.ipynb
 |—— beHappy in English.pptx
 |—— beHappy po Polsku.pptx
 |—— blur.css
@@ -86,7 +87,7 @@ Install dependencies via cmd with:
 - hardware
   ```
   CPUs: Apple Silicon M1 8 cores, Intel i5-9300h, Intel i5-7400
-  GPUs: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, GPU 1660 Super
+  GPUs: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, 1660 Super
   ```
 - RAM
   ```
