@@ -37,6 +37,10 @@ Install dependencies via cmd with:
 
       cd python_api
       python main.py
+
+## Important Information
+- By default all paragraphs containing offensive language are blured. If You want to see them unblured, You have to hover over them for 0.5 seconds and it will become clear.
+- Furthermore, if You want to fully disable blur, open Extension Popup and click button 'Blur'. Providing You don't click it again, all paragraphs will not be blured. 
   
 
 ## Directory Hierarchy
