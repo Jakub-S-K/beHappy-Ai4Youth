@@ -99,7 +99,7 @@ Install all required dependencies with:
   ```
 - RAM
   ```
-    Trained on platforms with at least 12GB of RAM
+  Trained on platforms with at least 12GB of RAM
   ```
 
 ## References
