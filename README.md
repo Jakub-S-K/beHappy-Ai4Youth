@@ -1,4 +1,4 @@
-Ai4Youth
+Ai4Youth - beHappy
 ===
 ## General Information
 - Project name:  `beHappy`
