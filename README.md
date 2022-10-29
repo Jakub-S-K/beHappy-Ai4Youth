@@ -3,9 +3,9 @@ Ai4Youth
 ## General Information
 - Project name:  `beHappy`
 - Authors:  `Jakub Stanula-Kaczka`,`Wiktor Koźlik`,`Piotr Chajec`
+- Project form: Google Chrome extension with predicting model exposed on `localhost` moderating `reddit.com` comments.
 
-
-## Install & Dependence
+## Installation & Dependences
 - python
     - tensorflow
     - keras
@@ -17,7 +17,7 @@ Ai4Youth
     - flask
     - flask_cors
 
-Install dependencies via cmd with:
+Install all required dependencies with:
 
 ```pip install -r requirements.txt``` 
 
@@ -32,15 +32,19 @@ Install dependencies via cmd with:
   Run all cells in .ipynb notebook model 
   and tokenizer will be saved in it's directory
 - Test & Run
- 
-    Python script uses relative path so it does need to be run in folder with model and tokenizers files. 
+
+    In order to load extension go to `Extensions` -> Set `Developer Mode` in upper right cornet to `On` -> On Upper left corner select this repository directory by clicking on `Load unpacked`
+
+    Generally speaking you don't need to train model from scratch. You could use pretrained models contained in ```/python_api``` directory.
+    Python script uses relative path so it does need to be run in folder with model and tokenizers files.
+    You can test different models by changing it's names in `main.py` file.
 
       cd python_api
       python main.py
 
 ## Important Information
-- By default all paragraphs containing offensive language are blured. If You want to see them unblured, simply hover over them for 0.5 seconds and it will become clear.
-- Furthermore, if You want to fully disable blur, open Extension Popup and click button 'Blur'. Providing You don't click it again, all paragraphs will not be blured. 
+- By default all paragraphs containing offensive language are blured. To see moderated content simply hower mouse on it.
+- It is possible to disable blurring completely. See extension menu for futher details.
   
 
 ## Directory Hierarchy
@@ -55,30 +59,30 @@ Install dependencies via cmd with:
 |—— contentScript.js
 |—— content_img
 |    |—— 0.png
-|    |—— 1.png
+|    \—— 1.png
 |—— images
 |    |—— ai_icon128.png
 |    |—— ai_icon16.png
 |    |—— ai_icon32.png
 |    |—— ai_icon48.png
-|    |—— ai_icon64.png
+|    \—— ai_icon64.png
 |—— manifest.json
 |—— popup.css
 |—— popup.html
 |—— popup.js
 |—— python_api
-|    |—— Dense128.h5
-|    |—— Dense32-new-tfidf.h5
-|    |—— Dense32.h5
-|    |—— Dense64.h5
-|    |—— Dense8-4.h5
-|    |—— main.py
-|    |—— model.h5
-|    |—— model2.h5
-|    |—— tfidf-2.dat
-|    |—— tfidf-3.dat
-|    |—— tfidf.dat
-|    |—— tokenizer_twitter_save.dat
+     |—— Dense128.h5
+     |—— Dense32-new-tfidf.h5
+     |—— Dense32.h5
+     |—— Dense64.h5
+     |—— Dense8-4.h5
+     |—— main.py
+     |—— model.h5
+     |—— model2.h5
+     |—— tfidf-2.dat
+     |—— tfidf-3.dat
+     |—— tfidf.dat
+     \—— tokenizer_twitter_save.dat
 ```
 ## Code Details
 ### Tested Platform
@@ -91,11 +95,11 @@ Install dependencies via cmd with:
 - hardware
   ```
   CPUs: Apple Silicon M1 8 cores, Intel i5-9300h, Intel i5-7400
-  GPUs: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, 1660 Super
+  GPUs: Apple Silicon M1 8 cores, Nvidia GeForce GTX 1650, Nvidia GTX 1660 Super
   ```
 - RAM
   ```
-    Tested on platforms with at least 12GB of RAM
+    Trained on platforms with at least 12GB of RAM
   ```
 
 ## References
