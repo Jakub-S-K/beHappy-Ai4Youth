@@ -70,7 +70,7 @@ Install all required dependencies with:
 |—— popup.css
 |—— popup.html
 |—— popup.js
-|—— python_api
+\—— python_api
      |—— Dense128.h5
      |—— Dense32-new-tfidf.h5
      |—— Dense32.h5
